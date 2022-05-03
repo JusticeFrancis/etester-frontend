@@ -27,7 +27,7 @@ const dashboard = {
             breadcrumbs: false
         },
         {
-            id: 'default',
+            id: 'default1',
             title: 'Test',
             type: 'item',
             url: '/test',
@@ -35,7 +35,7 @@ const dashboard = {
             breadcrumbs: false
         },
         {
-            id: 'default',
+            id: 'default2',
             title: 'Leader Board',
             type: 'item',
             url: '/ladder-board',

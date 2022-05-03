@@ -15,7 +15,7 @@ const logout = {
     type: 'group',
     children: [
         {
-            id: 'default',
+            id: 'default3',
             title: 'logout',
             type: 'item',
             url: '/dashboard/default',

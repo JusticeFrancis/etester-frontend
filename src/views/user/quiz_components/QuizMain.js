@@ -39,10 +39,12 @@ class PaperSheet extends React.Component {
         if (this.state.step === 0) {
             var x = 0;
             var i = setInterval(() => {
-                this.moveNext();
-                if (++x === 3) {
+                if (this.state.current + 1 === this.state.quiz.length) {
                     window.clearInterval(i);
                     this.setState({ step: 1 });
+                    return;
+                } else {
+                    this.moveNext();
                 }
             }, 5000);
         } else {
@@ -305,14 +307,13 @@ class PaperSheet extends React.Component {
                                     </Button>
                                 ) : (
                                     <Button
-                                        onClick={this.moveNext}
                                         disabled
                                         variant="raised"
                                         color="primary"
                                         style={{ float: 'right', backgroundColor: '#5e35b1', color: 'white' }}
                                         sx={{ mb: 2 }}
                                     >
-                                        Next
+                                        Finish
                                     </Button>
                                 )}
                             </div>

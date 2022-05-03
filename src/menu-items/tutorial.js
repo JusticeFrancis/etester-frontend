@@ -16,7 +16,7 @@ const tutorial = {
     type: 'group',
     children: [
         {
-            id: 'default',
+            id: 'default4',
             title: 'materials',
             type: 'item',
             url: '/materials',
@@ -24,7 +24,7 @@ const tutorial = {
             breadcrumbs: false
         },
         {
-            id: 'default',
+            id: 'default5',
             title: 'tutors(coming soon)',
             type: 'item',
             url: '/dashboard/default',
