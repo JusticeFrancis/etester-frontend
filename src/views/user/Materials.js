@@ -239,19 +239,6 @@ const Materials = () => {
                                         secondary={
                                             <>
                                                 <IconButton
-                                                    style={{
-                                                        fontSize: '12px',
-                                                        border: '1px solid #5e35b1',
-                                                        backgroundColor: '#5e35b1',
-                                                        padding: '4px',
-                                                        color: 'white',
-                                                        borderRadius: '20px',
-                                                        margin: '3px'
-                                                    }}
-                                                >
-                                                    undestandable
-                                                </IconButton>
-                                                <IconButton
                                                     edge="end"
                                                     aria-label="delete"
                                                     style={{
