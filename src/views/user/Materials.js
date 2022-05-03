@@ -266,21 +266,6 @@ const Materials = () => {
                                                 >
                                                     top rated
                                                 </IconButton>
-                                                <IconButton
-                                                    edge="end"
-                                                    aria-label="delete"
-                                                    style={{
-                                                        fontSize: '12px',
-                                                        border: '1px solid #b39f51',
-                                                        backgroundColor: '#b39f51',
-                                                        padding: '4px',
-                                                        color: 'white',
-                                                        borderRadius: '20px',
-                                                        margin: '3px'
-                                                    }}
-                                                >
-                                                    sponsored
-                                                </IconButton>
                                             </>
                                         }
                                     />
