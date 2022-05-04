@@ -1,5 +1,10 @@
 import {
     Avatar,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
     Divider,
     Grid,
     IconButton,
@@ -19,16 +24,85 @@ import SupervisedUserCircleOutlinedIcon from '@mui/icons-material/SupervisedUser
 import React from 'react';
 import { IconHome, IconHome2, IconCrown, IconMedal } from '@tabler/icons';
 import { useTheme } from '@mui/styles';
-import PersonPinCircleOutlinedIcon from '@mui/icons-material/PersonPinCircleOutlined';
-import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
-import { useEffect, useState } from 'react';
-import { Card, CardContent } from '@mui/material';
+import { useEffect, useState, useRef } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 //play,audio,document icon
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import ArticleIcon from '@mui/icons-material/Article';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import ReviewsIcon from '@mui/icons-material/Reviews';
+import CircularProgress from '@mui/material/CircularProgress';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import AudioPlayer from 'material-ui-audio-player';
+import { makeStyles } from '@material-ui/core/styles';
+import ReactPlayer from 'react-player/lazy';
+
+const muiTheme = createMuiTheme({});
+
+const videoStyle = makeStyles({
+    playerWrapper: {
+        width: '100%',
+        position: 'relative'
+    }
+});
+
+const materialStyle = makeStyles((theme) => {
+    return {
+        root: {
+            [theme.breakpoints.down('sm')]: {
+                width: '100%'
+            }
+        },
+        loopIcon: {
+            color: '#3f51b5',
+            '&.selected': {
+                color: '#0921a9'
+            },
+            '&:hover': {
+                color: '#7986cb'
+            },
+            [theme.breakpoints.down('sm')]: {
+                display: 'none'
+            }
+        },
+        playIcon: {
+            color: '#5e35b1',
+            '&:hover': {
+                color: '#5e35f1'
+            }
+        },
+        replayIcon: {
+            color: '#5e35b1'
+        },
+        pauseIcon: {
+            color: '#0099ff'
+        },
+        volumeIcon: {
+            color: '#5e35b1',
+            '&:hover': {
+                color: '#5e35f1'
+            }
+        },
+        volumeSlider: {
+            color: '#5e35b1'
+        },
+        progressTime: {
+            color: 'rgba(0, 0, 0, 0.54)'
+        },
+        mainSlider: {
+            color: '#3f51b5',
+            '& .MuiSlider-rail': {
+                color: '#7986cb'
+            },
+            '& .MuiSlider-track': {
+                color: '#3f51b5'
+            },
+            '& .MuiSlider-thumb': {
+                color: '#303f9f'
+            }
+        }
+    };
+});
 
 const Materials = () => {
     const [isLoading, setLoading] = useState(true);
@@ -37,7 +111,7 @@ const Materials = () => {
     }, []); */
     setTimeout(() => {
         setLoading(false);
-    }, 5000);
+    }, 1000);
     function generate(element) {
         return [0, 1, 2].map((value) =>
             React.cloneElement(element, {
@@ -51,6 +125,24 @@ const Materials = () => {
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
     const theme = useTheme();
+
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleClickOpenDialog = () => {
+        setMaterialComponentLoading(true);
+        setOpenDialog(true);
+        setTimeout(() => {
+            setMaterialComponentLoading(false);
+        }, 1000);
+    };
+    const handleCloseDialog = (event, reason) => {
+        if (reason !== 'backdropClick') {
+            setOpenDialog(false);
+        }
+    };
+    const [materialComponentLoading, setMaterialComponentLoading] = useState(false);
+    const [materialType, setMaterialType] = useState('');
+    const classes = videoStyle();
+    const [playing, setPlaying] = useState(false);
     return (
         <>
             {isLoading ? (
@@ -113,38 +205,38 @@ const Materials = () => {
                                 <ListItem
                                     secondaryAction={
                                         <IconButton edge="end" aria-label="delete">
-                                            <Skeleton variant="rectangular" width={40} height={34} style={{ borderRadius: '30px' }} />
+                                            <Skeleton variant="rectangular" width={80} height={20} />
                                             &nbsp;
-                                            <Skeleton variant="rectangular" width={40} height={34} />
+                                            <Skeleton variant="rectangular" width={80} height={20} />
                                         </IconButton>
                                     }
                                 >
                                     <Skeleton variant="rectangular" width={40} height={34} style={{ borderRadius: '30px' }} /> &nbsp;
-                                    <Skeleton variant="rectangular" width={40} height={34} />
+                                    <Skeleton variant="rectangular" width={200} height={34} />
                                 </ListItem>
                                 <ListItem
                                     secondaryAction={
                                         <IconButton edge="end" aria-label="delete">
-                                            <Skeleton variant="rectangular" width={40} height={34} style={{ borderRadius: '30px' }} />
+                                            <Skeleton variant="rectangular" width={80} height={20} />
                                             &nbsp;
-                                            <Skeleton variant="rectangular" width={40} height={34} />
+                                            <Skeleton variant="rectangular" width={80} height={20} />
                                         </IconButton>
                                     }
                                 >
                                     <Skeleton variant="rectangular" width={40} height={34} style={{ borderRadius: '30px' }} /> &nbsp;
-                                    <Skeleton variant="rectangular" width={40} height={34} />
+                                    <Skeleton variant="rectangular" width={200} height={34} />
                                 </ListItem>
                                 <ListItem
                                     secondaryAction={
                                         <IconButton edge="end" aria-label="delete">
-                                            <Skeleton variant="rectangular" width={40} height={34} style={{ borderRadius: '30px' }} />
+                                            <Skeleton variant="rectangular" width={80} height={20} />
                                             &nbsp;
-                                            <Skeleton variant="rectangular" width={40} height={34} />
+                                            <Skeleton variant="rectangular" width={80} height={20} />
                                         </IconButton>
                                     }
                                 >
                                     <Skeleton variant="rectangular" width={40} height={34} style={{ borderRadius: '30px' }} /> &nbsp;
-                                    <Skeleton variant="rectangular" width={40} height={34} />
+                                    <Skeleton variant="rectangular" width={200} height={34} />
                                 </ListItem>
                             </List>
                         </Demo>
@@ -218,7 +310,12 @@ const Materials = () => {
                                         showing results for all materials in cns pharmacology in "pharmacology"
                                     </span>
                                 </ListItemButton>
-                                <ListItemButton>
+                                <ListItemButton
+                                    onClick={() => {
+                                        handleClickOpenDialog();
+                                        setMaterialType('video');
+                                    }}
+                                >
                                     <ListItemAvatar>
                                         <Avatar>
                                             <PlayCircleFilledWhiteIcon />
@@ -226,54 +323,15 @@ const Materials = () => {
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={
-                                            <div>
-                                                <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
-                                                    &nbsp; 1,100 views
-                                                </IconButton>
-                                                Understanding drug classification in CNS pharmacology
-                                                <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
-                                                    30 mins watch
-                                                </IconButton>
-                                            </div>
-                                        }
-                                        secondary={
                                             <>
-                                                <IconButton
-                                                    edge="end"
-                                                    aria-label="delete"
-                                                    style={{
-                                                        fontSize: '12px',
-                                                        border: '1px solid #446d91',
-                                                        backgroundColor: '#446d91',
-                                                        padding: '4px',
-                                                        color: 'white',
-                                                        borderRadius: '20px',
-                                                        margin: '3px'
-                                                    }}
-                                                >
-                                                    top rated
-                                                </IconButton>
-                                            </>
-                                        }
-                                    />
-                                </ListItemButton>
-                                <ListItemButton>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <VolumeUpIcon />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={
-                                            <div>
-                                                Preparing for your part two MBBS pharmacology examples
+                                                <div>Understanding the principles behind pharmacological concepts</div>
                                                 <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
                                                     &nbsp; 48 views
                                                 </IconButton>
                                                 <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
                                                     5 mins listen
                                                 </IconButton>
-                                            </div>
+                                            </>
                                         }
                                         secondary={
                                             <>
@@ -309,23 +367,28 @@ const Materials = () => {
                                         }
                                     />
                                 </ListItemButton>
-                                <ListItemButton>
+                                <ListItemButton
+                                    onClick={() => {
+                                        handleClickOpenDialog();
+                                        setMaterialType('audio');
+                                    }}
+                                >
                                     <ListItemAvatar>
                                         <Avatar>
-                                            <ArticleIcon />
+                                            <VolumeUpIcon />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={
-                                            <div>
-                                                All you need to know about opioid receptors
+                                            <>
+                                                <div>Preparing for your part two MBBS pharmacology examples</div>
                                                 <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
-                                                    &nbsp; 672 views
+                                                    &nbsp; 48 views
                                                 </IconButton>
                                                 <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
-                                                    10 mins read
+                                                    5 mins listen
                                                 </IconButton>
-                                            </div>
+                                            </>
                                         }
                                         secondary={
                                             <>
@@ -346,7 +409,115 @@ const Materials = () => {
                                         }
                                     />
                                 </ListItemButton>
+                                <ListItemButton>
+                                    <ListItemAvatar>
+                                        <Avatar>
+                                            <ArticleIcon />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={
+                                            <>
+                                                <div>Classification of CNS drugs</div>
+                                                <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
+                                                    &nbsp; 48 views
+                                                </IconButton>
+                                                <IconButton style={{ float: 'right', fontSize: '15px', marginLeft: '0px' }}>
+                                                    5 mins listen
+                                                </IconButton>
+                                            </>
+                                        }
+                                        secondary={
+                                            <>
+                                                <IconButton
+                                                    style={{
+                                                        fontSize: '12px',
+                                                        border: '1px solid #5e35b1',
+                                                        backgroundColor: '#5e35b1',
+                                                        padding: '4px',
+                                                        color: 'white',
+                                                        borderRadius: '20px',
+                                                        margin: '3px'
+                                                    }}
+                                                >
+                                                    undestandable
+                                                </IconButton>
+                                                <IconButton
+                                                    edge="end"
+                                                    aria-label="delete"
+                                                    style={{
+                                                        fontSize: '12px',
+                                                        border: '1px solid #b39f51',
+                                                        backgroundColor: '#b39f51',
+                                                        padding: '4px',
+                                                        color: 'white',
+                                                        borderRadius: '20px',
+                                                        margin: '3px'
+                                                    }}
+                                                >
+                                                    sponsored
+                                                </IconButton>
+                                            </>
+                                        }
+                                    />
+                                </ListItemButton>
                             </List>
+                            {/* dialog to view material on the site */}
+                            <Dialog fullWidth disableEscapeKeyDown open={openDialog} onClose={handleCloseDialog}>
+                                {materialComponentLoading ? (
+                                    <>
+                                        <DialogTitle style={{ alignContent: 'right' }}>loading material component to screen...</DialogTitle>
+                                        <DialogContent>
+                                            <Grid container>
+                                                <Grid container justifyContent={'center'}>
+                                                    <Grid item margin={'auto'}>
+                                                        <CircularProgress color="success" />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </DialogContent>
+                                    </>
+                                ) : (
+                                    <>
+                                        <DialogTitle style={{ alignContent: 'right' }}>Material name by material author</DialogTitle>
+                                        <DialogContent>
+                                            {materialType === 'audio' ? (
+                                                <Grid container>
+                                                    <Grid container justifyContent={'center'}>
+                                                        <Grid item style={{ marginBottom: '50px', marginTop: '50px' }}>
+                                                            <ThemeProvider theme={muiTheme}>
+                                                                <AudioPlayer
+                                                                    useStyles={materialStyle}
+                                                                    width={'500px'}
+                                                                    src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                                                                />
+                                                            </ThemeProvider>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            ) : null}
+                                            {materialType === 'video' ? (
+                                                <div className={classes.playerWrapper}>
+                                                    <ReactPlayer
+                                                        id={'123'}
+                                                        width={'100%'}
+                                                        height="100%"
+                                                        url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                                                        muted={true}
+                                                        playing={false}
+                                                        controls={true}
+                                                        config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+                                                    />
+                                                </div>
+                                            ) : null}
+                                        </DialogContent>
+                                    </>
+                                )}
+
+                                <DialogActions>
+                                    <Button onClick={handleCloseDialog}>Cancel</Button>
+                                </DialogActions>
+                            </Dialog>
                         </Demo>
                     </Grid>
                 </Grid>
